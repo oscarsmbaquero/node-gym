@@ -13,7 +13,7 @@ const userSchema = new Schema(
     cp:{ type:String, required: true},
     provincia:{ type:String, required: false},
     //numeroPedido: { type: Object, required: false },
-    numeroPedido: [{ type: mongoose.Types.ObjectId, ref: 'Ventas', required:false }]
+    //numeroPedido: [{ type: mongoose.Types.ObjectId, ref: 'Ventas', required:false }]
 
     //numeroPedido:  { type: mongoose.Types.ObjectId, ref:'Products', required: false },
   },

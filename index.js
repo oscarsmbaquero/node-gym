@@ -11,7 +11,7 @@ import { DB_URL, connect } from "./server/config/db.js";
 //IMPORTACION DE RUTAS
 
 import { userRoutes } from "./server/api/routes/users.routes.js";
-import { ventasRoutes } from "./server/api/routes/ventas.routes.js";
+import { reservasRoutes } from "./server/api/routes/reservas.routes.js";
 
 //creo servidor express
 const server = express();
@@ -35,7 +35,7 @@ server.use(cors('*'));
 //RUTAS
 
 server.use("/users", userRoutes);
-server.use("/ventas", ventasRoutes);
+server.use("/reservas", reservasRoutes);
 
 
 server.use('*', (req, res, next) => {
