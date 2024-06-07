@@ -1,17 +1,18 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const reservasSchema = new Schema({
-  pista: { type: String, required: true },
-  hora: { type: String, required: false },
-  dia: { type: Number, required: false },
-  plazas_disponibles: { type: Number, required: false },
-},
-{
-  timestamps: true,
-});
+const reservaSchema = new Schema({
+  instalacion: { type: Schema.Types.ObjectId, ref: 'Instalacion', required: true },
+  tipo: { type: String, required: true },
+  usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: false },
+  fecha: { type: String, required: false },
+  horaInicio: { type: String, required: false },
+  horaFin: { type: String, required: false },
+  estado: { type: String, enum: ['pendiente', 'confirmada', 'cancelada'], default: 'pendiente' },
+  n_usuario: { type: Number, required: false }
+}, { timestamps: true });
 
 
-const Reservas = mongoose.model('Reservas', reservasSchema);
+const Reservas = mongoose.model('Reservas', reservaSchema);
 
 export { Reservas };

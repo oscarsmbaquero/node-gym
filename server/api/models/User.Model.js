@@ -1,27 +1,14 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
-  {
-    user: { type: String, required: true },    
-    password: { type: String, required: true },
-    mail:{ type:String, required: true},
-    tlf:{ type:String, required: true},
-    rol:{ type:String, required: false},
-    address:{ type:String, required: false},
-    localidad: { type:String, required: false},
-    cp:{ type:String, required: true},
-    provincia:{ type:String, required: false},
-    //numeroPedido: { type: Object, required: false },
-    //numeroPedido: [{ type: mongoose.Types.ObjectId, ref: 'Ventas', required:false }]
+const usuarioSchema = new Schema({
+  nombre: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  telefono: { type: String, required: false },
+  rol: { type: String, enum: ['admin', 'cliente'], default: 'cliente' }
+}, { timestamps: true });
 
-    //numeroPedido:  { type: mongoose.Types.ObjectId, ref:'Products', required: false },
-  },
-  {
-    timestamps: true,
-  }
-);
-
-const User = mongoose.model('User',userSchema );
+const User = mongoose.model('User',usuarioSchema );
 
 export { User }
