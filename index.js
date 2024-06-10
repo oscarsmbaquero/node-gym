@@ -9,7 +9,7 @@ import cors from 'cors';
 import { DB_URL, connect } from "./server/config/db.js";
 
 //IMPORTACION DE RUTAS
-
+import { instalacionesRoutes } from "./server/api/routes/instalaciones.routes.js";
 import { userRoutes } from "./server/api/routes/users.routes.js";
 import { reservasRoutes } from "./server/api/routes/reservas.routes.js";
 
@@ -36,7 +36,7 @@ server.use(cors('*'));
 
 server.use("/users", userRoutes);
 server.use("/reservas", reservasRoutes);
-
+server.use("/instalaciones", instalacionesRoutes);
 
 server.use('*', (req, res, next) => {
   const error = new Error('Route not found');

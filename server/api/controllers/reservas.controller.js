@@ -20,6 +20,7 @@ const getReservasByDate = async (req, res, next) => {
     //console.log(id);
     console.log(fecha);
     const reservaByDate = await Reservas.find({ fecha: fecha })
+    //.populate({ path: "materialIntervencion",select: "descripcion"})
 
     return res.status(200).json(reservaByDate);
     // return res.json({
