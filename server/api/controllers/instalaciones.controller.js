@@ -14,27 +14,25 @@ const getInstalaciones = async (req, res, next) => {
   }
 };
 
-// const getReservasByDate = async (req, res, next) => {
-//   console.log("Entro id   dscsdfsf");
-//   try {
-//     const { fecha } = req.params;
-//     //console.log(id);
-//     console.log(fecha);
-//     const reservaByDate = await Reservas.find({ fecha: fecha })
+const getInstalacionesByType = async (req, res, next) => {
+  console.log("Entro id   dscsdfsf");
+  try {
+    const { tipo } = req.params;
+    console.log(tipo);
+    //console.log(fecha);
+    const pistasDisponibles = await Instalaciones.find({ tipo: tipo })
 
-//     return res.status(200).json(reservaByDate);
-//     // return res.json({
-//     //     status: 200,
-//     //     message: httpStatusCode[200],
-//     //     data: { jobs: jobbyid },
-//     // });
-//     //res.send(jobbyid);
-//   } catch (error) {
-//     return next(error);
-//   }
-// };
-
-
+    return res.status(200).json(pistasDisponibles);
+    // return res.json({
+    //     status: 200,
+    //     message: httpStatusCode[200],
+    //     data: { jobs: jobbyid },
+    // });
+    //res.send(jobbyid);
+  } catch (error) {
+    return next(error);
+  }
+};
 
 
 
@@ -42,4 +40,6 @@ const getInstalaciones = async (req, res, next) => {
 
 
 
-export { getInstalaciones };
+
+
+export { getInstalaciones, getInstalacionesByType };
