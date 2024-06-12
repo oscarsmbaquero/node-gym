@@ -34,23 +34,18 @@ const getReservasByDate = async (req, res, next) => {
 
 const addReserva = async (req, res, next) => {
 
-  try {
-    const NewReserva = new Reservas({
-      nameClient: req.body.nameClient,
-      numberIssue: req.body.numberIssue,
-      //image: req.file_url,
-      //imagen: req.file_url,
-      type: req.body.type,
-      concepto: req.body.concepto,
-      price: req.body.price,
-      iva: req.body.iva,
-      priceFinal: req.body.priceFinal,
-      date: req.body.date,
-      //image: req.file_url,
+  console.log(req.body,'body');
 
-      //tipo:req.body.tipo,
+  try {
+    const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
+    const NewReserva = new Reservas({
+      fecha: req.body.reserva.date,
+      horaInicio: horaInicio,
+      horaFin:horaFin,
+      instalacion: req.body.reserva.n_pista,
+      //usuario: req.body.reserva.nombre,
     });
-    //console.log(NewGasto,'new');
+    console.log(NewReserva,'new');
     const newReservaDB = await NewReserva.save();
     return res.json({
       status: 201,

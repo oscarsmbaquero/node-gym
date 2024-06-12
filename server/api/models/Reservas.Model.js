@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const reservaSchema = new Schema({
   instalacion: { type: Schema.Types.ObjectId, ref: 'Instalaciones', required: false },
+  //instalacion: { type: String, ref: 'Instalaciones', required: false },
   //tipo: { type: Schema.Types.ObjectId, required: true },
   usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: false },
   //tipo: { type: Schema.Types.ObjectId, ref: 'Tipo', required: false },
