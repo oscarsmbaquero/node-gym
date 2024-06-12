@@ -31,31 +31,88 @@ const getReservasByDate = async (req, res, next) => {
     return next(error);
   }
 };
-
+//funciona se comenta para probar la otra 
+// const addReserva = async (req, res, next) => {
+//   try {
+//     const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
+//     const NewReserva = new Reservas({
+//       fecha: req.body.reserva.date,
+//       horaInicio: horaInicio,
+//       horaFin:horaFin,
+//       instalacion: req.body.reserva.n_pista,
+//       usuario: req.body.reserva.nombre,
+//       n_usuario: 4,
+//       usuarios_apuntados: 1,
+//       //usuario: req.body.reserva.nombre,
+//     });
+//     console.log(NewReserva,'new');
+//     const newReservaDB = await NewReserva.save();
+//     return res.json({
+//       status: 201,
+//       message: httpStatusCode[201],
+//       data: { reservas: newReservaDB },
+//     });
+//   } catch (error) {
+//     return next(error);
+//   }
+// };
+//funciona pero se comenta para probar añadir usuario
 const addReserva = async (req, res, next) => {
-
-  console.log(req.body,'body');
-
+  console.log(req.body, 'body');
   try {
     const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
-    const NewReserva = new Reservas({
-      fecha: req.body.reserva.date,
+    const { date, n_pista, nombre } = req.body.reserva;
+    
+    // Buscar una reserva existente con las mismas condiciones
+    const existingReserva = await Reservas.findOne({
+      fecha: date,
+      instalacion: n_pista,
       horaInicio: horaInicio,
-      horaFin:horaFin,
-      instalacion: req.body.reserva.n_pista,
-      //usuario: req.body.reserva.nombre,
+      horaFin: horaFin
     });
-    console.log(NewReserva,'new');
-    const newReservaDB = await NewReserva.save();
-    return res.json({
-      status: 201,
-      message: httpStatusCode[201],
-      data: { reservas: newReservaDB },
-    });
+    console.log(existingReserva._id,'existe');
+
+    if (existingReserva) {
+      console.log(existingReserva);
+      // Si la reserva existe, incrementar usuarios_apuntados en 1
+      existingReserva.usuarios_apuntados += 1;
+      await existingReserva.save();
+      await Reservas.updateOne(
+      { _id: existingReserva._id },
+      { $push: { usuario: nombre } },
+      { new: true }
+    );
+
+      return res.json({
+        status: 200,
+        message: "Reserva actualizada con éxito",
+        data: { reservas: existingReserva },
+      });
+    } else {
+      // Si no existe, crear una nueva reserva
+      const newReserva = new Reservas({
+        fecha: date,
+        horaInicio: horaInicio,
+        horaFin: horaFin,
+        instalacion: n_pista,
+        usuario: nombre,
+        n_usuario: 4,
+        usuarios_apuntados: 1,
+      });
+
+      const newReservaDB = await newReserva.save();
+
+      return res.json({
+        status: 201,
+        message: "Reserva creada con éxito",
+        data: { reservas: newReservaDB },
+      });
+    }
   } catch (error) {
     return next(error);
   }
 };
+
 
 
 
