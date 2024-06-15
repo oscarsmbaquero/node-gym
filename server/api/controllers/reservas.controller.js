@@ -18,8 +18,9 @@ const getReservasByDate = async (req, res, next) => {
     const { fecha } = req.params;
     //console.log(id);
     console.log(fecha);
-    const reservaByDate = await Reservas.find({ fecha: fecha }).populate([{
-      path: "instalacion", select: ""}]);
+    const reservaByDate = await Reservas.find({ fecha: fecha }).populate([{ path: "instalacion", select: ""}])
+    .populate([{ path: "usuario", select: "user"}])
+    ;
     return res.status(200).json(reservaByDate);
     // return res.json({
     //     status: 200,
