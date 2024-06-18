@@ -14,9 +14,9 @@ const connect = async () => {
     });
     //Con destructuring le sacamos el name y el host para poder verlo en el log
     const { name, host } = DB.connection;
-    console.log(`Connected to database ${name} in host: ${host}`);
+    (`Connected to database ${name} in host: ${host}`);
   } catch (error) {
-    console.log("Error connecting to database", error);
+    ("Error connecting to database", error);
   }
 };
 

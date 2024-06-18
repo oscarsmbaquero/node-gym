@@ -51,5 +51,5 @@ server.use((err, req, res, next) => {
 
 server.listen(PORT, () => {
   //Escucho mi servidor en el puerto indicado
-  console.log(`Node server listening on port http://localhost:${PORT}`);
+  (`Node server listening on port http://localhost:${PORT}`);
 });

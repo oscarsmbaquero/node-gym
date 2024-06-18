@@ -6,7 +6,8 @@ const usuarioSchema = new Schema({
   mail: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   telefono: { type: String, required: false },
-  rol: { type: String, enum: ['admin', 'cliente'], default: 'cliente' }
+  rol: { type: String, enum: ['admin', 'cliente'], default: 'cliente' },
+  reservas: [{ type: Schema.Types.ObjectId, ref: 'User', required: false }],
 }, { timestamps: true });
 
 const User = mongoose.model('User',usuarioSchema );

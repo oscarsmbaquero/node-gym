@@ -6,10 +6,10 @@ import { httpStatusCode } from "../../utils/httpStatusCode.js";
 //import sendMail from "./sendMail.js";
 import nodemailer from "nodemailer";
 const loginUser = async (req, res, next) => {
-  console.log('Entro');
+  ('Entro');
   try {
     const { body } = req;
-    console.log(body);
+    (body);
     // Comprobar email
     const user = await User.findOne({ mail: body.mail });
     // Comprobar password
@@ -46,7 +46,7 @@ const loginUser = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    (error);
     return next(error);
   }
 };
@@ -123,7 +123,7 @@ const getUsers = async (req, res, next) => {
 // const OrderClient =("/", async (req, res, next) => {
 //     try {
 //       const { userId } = req.params;
-//       console.log(userId);
+//       (userId);
 //       const userById = await User.findById(userId).populate([
 //         { path: "numeroPedido", select: "" },
 //       ]);
@@ -138,10 +138,10 @@ const getUsers = async (req, res, next) => {
 //   });
 
 // const getUserById = async (req, res, next) => {
-//   console.log("Entro id");
+//   ("Entro id");
 //   try {
 //     const { id } = req.params;
-//     console.log(id);
+//     (id);
 //     const userById = await User.findById(id);
 
 //     return res.status(200).json(userById);
@@ -191,17 +191,17 @@ const getUsers = async (req, res, next) => {
 // };
 
 // const resetPassword = async (req, res, next) => {
-//   console.log('entro');
+//   ('entro');
 //   try {
 //     const { email } = req.params;
-//     console.log(email,'mail');
+//     (email,'mail');
 //     const newPassword = req.body.nuevaContrasena;
-//     console.log(newPassword,283);
+//     (newPassword,283);
 //     const previousUser = await User.findOne({ mail: email });
-//     console.log(previousUser,285)
+//     (previousUser,285)
 //     const pwdHash = await bcrypt.hash(newPassword, 10);
 
-//     console.log(pwdHash,previousUser,286)
+//     (pwdHash,previousUser,286)
 //     //Para evitar que se modifique el id de mongo:
 //     // pilotModify._id = id;
 //     // const pilotUpdated = await User.findByIdAndUpdate(
@@ -218,13 +218,13 @@ const getUsers = async (req, res, next) => {
 //   }
 // };
 // const resetPassword = async (req, res, next) => {
-//   console.log("entro");
+//   ("entro");
 
 //   try {
 //     const { email } = req.params;
 
 //     const previousUser = await User.findOne({ mail: email });
-//     // console.log(previousUser, 285);
+//     // (previousUser, 285);
 //     //await sendMail(email);
 //     if (!previousUser) {
 //       return res.status(404).json({

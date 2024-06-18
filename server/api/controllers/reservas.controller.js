@@ -16,8 +16,8 @@ const getReservas = async (req, res, next) => {
 const getReservasByDate = async (req, res, next) => {
   try {
     const { fecha } = req.params;
-    //console.log(id);
-    console.log(fecha);
+    //(id);
+    (fecha);
     const reservaByDate = await Reservas.find({ fecha: fecha }).populate([{ path: "instalacion", select: ""}])
     .populate([{ path: "usuario", select: "user"}])
     ;
@@ -32,6 +32,27 @@ const getReservasByDate = async (req, res, next) => {
     return next(error);
   }
 };
+
+const getReservasById = async (req, res, next) => {
+  ('Entro al id');
+  try {
+    const { id } = req.params;
+    const reservas = await Reservas.find({
+      'usuario': { $in: [id] }
+    }).populate([{ path: "instalacion", select: ""}]);
+    return res.status(200).json(reservas);
+    // return res.json({
+    //     status: 200,
+    //     message: httpStatusCode[200],
+    //     data: { jobs: jobbyid },
+    // });
+    //res.send(jobbyid);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+
 //funciona se comenta para probar la otra 
 const addReservaOld = async (req, res, next) => {
   try {
@@ -46,7 +67,7 @@ const addReservaOld = async (req, res, next) => {
       usuarios_apuntados: 1,
       //usuario: req.body.reserva.nombre,
     });
-    console.log(NewReserva,'new');
+    (NewReserva,'new');
     const newReservaDB = await NewReserva.save();
     return res.json({
       status: 201,
@@ -59,28 +80,30 @@ const addReservaOld = async (req, res, next) => {
 };
 //funciona pero se comenta para probar añadir usuario
 const addReserva = async (req, res, next) => {
-  console.log(req.body, 'body');
   try {
     const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
     const { date, n_pista, nombre } = req.body.reserva;
-    console.log(horaInicio,horaFin,date, n_pista, nombre,'valores');
-    // Buscar una reserva existente con las mismas condiciones
+    // Buscar una reserva existente coincidente
     const existingReserva = await Reservas.findOne({
       fecha: date,
       instalacion: n_pista,
       horaInicio: horaInicio,
       horaFin: horaFin
     });
-    console.log(existingReserva,'existe');
 
     if (existingReserva) {
-      console.log(existingReserva);
+      (existingReserva);
       // Si la reserva existe, incrementar usuarios_apuntados en 1
       existingReserva.usuarios_apuntados += 1;
       await existingReserva.save();
       await Reservas.updateOne(
       { _id: existingReserva._id },
       { $push: { usuario: nombre } },
+      { new: true }
+    );
+    await User.updateOne(
+      { _id: nombre },
+      { $push: { reservas: existingReserva._id } },
       { new: true }
     );
 
@@ -90,7 +113,7 @@ const addReserva = async (req, res, next) => {
         data: { reservas: existingReserva },
       });
     } else {
-      console.log('no existe esta reserva');
+      ('no existe esta reserva');
       // Si no existe, crear una nueva reserva
       const newReserva = new Reservas({
         fecha: req.body.reserva.date,
@@ -101,10 +124,19 @@ const addReserva = async (req, res, next) => {
         n_usuario: 4,
         usuarios_apuntados: 1,
       });
-      console.log(newReserva,'reserva');
+      await User.updateOne(
+        { _id: nombre },
+        { $push: { reservas: newReserva._id } },
+        { new: true }
+      );
+      (newReserva,'reserva');
 
       const newReservaDB = await newReserva.save();
-
+      // await User.updateOne(
+      //   { _id: existingReserva._id },
+      //   { $push: { usuario: nombre } },
+      //   { new: true }
+      // );
       return res.json({
         status: 201,
         message: "Reserva creada con éxito",
@@ -125,4 +157,4 @@ const addReserva = async (req, res, next) => {
 
 
 
-export { getReservas, getReservasByDate, addReserva };
+export { getReservas, getReservasByDate, addReserva, getReservasById };

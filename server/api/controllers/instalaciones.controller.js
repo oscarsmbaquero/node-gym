@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 
 
 const getInstalaciones = async (req, res, next) => {
-  console.log('ehhhh');
+  ('ehhhh');
   try {
     const instalaciones = await Instalaciones.find();
     return res.status(200).json(instalaciones);
@@ -15,11 +15,11 @@ const getInstalaciones = async (req, res, next) => {
 };
 
 const getInstalacionesByType = async (req, res, next) => {
-  console.log("Entro id   dscsdfsf");
+  ("Entro id   dscsdfsf");
   try {
     const { tipo } = req.params;
-    console.log(tipo);
-    //console.log(fecha);
+    (tipo);
+    //(fecha);
     const pistasDisponibles = await Instalaciones.find({ tipo: tipo })
 
     return res.status(200).json(pistasDisponibles);
