@@ -82,11 +82,11 @@ const addReservaOld = async (req, res, next) => {
 const addReserva = async (req, res, next) => {
   try {
     const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
-    const { date, n_pista, nombre } = req.body.reserva;
+    const { date, n_pista, nombre, idPista } = req.body.reserva;
     // Buscar una reserva existente coincidente
     const existingReserva = await Reservas.findOne({
       fecha: date,
-      instalacion: n_pista,
+      instalacion: idPista,
       horaInicio: horaInicio,
       horaFin: horaFin
     });
