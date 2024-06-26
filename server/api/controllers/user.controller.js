@@ -81,43 +81,43 @@ const getUsers = async (req, res, next) => {
 //   }
 // };
 
-// const registerUser = async (req, res, next) => {
-//   try {
-//     const { body } = req;
-//     // Comprobar usuario
-//     const previousUser = await User.findOne({ mail: body.mail });
-//     if (previousUser) {
-//       const error = new Error("The user is already registered!");
-//       return next(error);
-//     }
+const registerUser = async (req, res, next) => {
+  try {
+    const { body } = req;
+    // Comprobar usuario
+    const previousUser = await User.findOne({ mail: body.mail });
+    if (previousUser) {
+      const error = new Error("The user is already registered!");
+      return next(error);
+    }
 
-//     // Encriptar password
-//     const pwdHash = await bcrypt.hash(body.password, 10);
-//     // Crear usuario en DB
-//     const newUser = new User({
-//       user: body.user,
-//       tlf: body.tlf,
-//       mail: body.mail,
-//       password: pwdHash,
-//       address: body.address,
-//       localidad: body.localidad,
-//       provincia: body.provincia,
-//       cp: body.cp
-//     });
-//     const savedUser = await newUser.save();
+    // Encriptar password
+    const pwdHash = await bcrypt.hash(body.password, 10);
+    // Crear usuario en DB
+    const newUser = new User({
+      user: body.user,
+      tlf: body.tlf,
+      mail: body.mail,
+      password: pwdHash,
+      address: body.address,
+      localidad: body.localidad,
+      provincia: body.provincia,
+      cp: body.cp
+    });
+    const savedUser = await newUser.save();
 
-//     // Respuesta
-//     return res.status(201).json({
-//       status: 201,
-//       message: httpStatusCode[201],
-//       data: {
-//         id: savedUser._id,
-//       },
-//     });
-//   } catch (error) {
-//     return next(error);
-//   }
-// };
+    // Respuesta
+    return res.status(201).json({
+      status: 201,
+      message: httpStatusCode[201],
+      data: {
+        id: savedUser._id,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 
 // const OrderClient =("/", async (req, res, next) => {
@@ -290,7 +290,7 @@ const getUsers = async (req, res, next) => {
 export {
   loginUser,
   logoutUser,
-  // registerUser,
+  registerUser,
   // OrderClient,
   getUsers,
   // getUserById,
