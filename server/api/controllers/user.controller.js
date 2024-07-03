@@ -6,7 +6,6 @@ import { httpStatusCode } from "../../utils/httpStatusCode.js";
 //import sendMail from "./sendMail.js";
 import nodemailer from "nodemailer";
 const loginUser = async (req, res, next) => {
-  ('Entro');
   try {
     const { body } = req;
     (body);
@@ -82,6 +81,9 @@ const getUsers = async (req, res, next) => {
 // };
 
 const registerUser = async (req, res, next) => {
+
+  console.log(req.body);
+  debugger;
   try {
     const { body } = req;
     // Comprobar usuario
@@ -98,12 +100,13 @@ const registerUser = async (req, res, next) => {
       user: body.user,
       tlf: body.tlf,
       mail: body.mail,
-      password: pwdHash,
       address: body.address,
       localidad: body.localidad,
       provincia: body.provincia,
-      cp: body.cp
+      cp: body.cp,
+      password: pwdHash,
     });
+    console.log(newUser);
     const savedUser = await newUser.save();
 
     // Respuesta
