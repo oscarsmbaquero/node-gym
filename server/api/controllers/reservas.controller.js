@@ -119,10 +119,11 @@ const addReserva = async (req, res, next) => {
         fecha: req.body.reserva.date,
         horaInicio: horaInicio,
         horaFin:horaFin,
-        instalacion: req.body.reserva.n_pista,
+        instalacion: req.body.reserva.pista,
         usuario: req.body.reserva.nombre,
         n_usuario: 4,
         usuarios_apuntados: 1,
+        //usuarios_apuntados: req.body.reserva.jugadores_apuntados ? req.body.reserva.jugadores_apuntados : 1,
       });
       await User.updateOne(
         { _id: nombre },
