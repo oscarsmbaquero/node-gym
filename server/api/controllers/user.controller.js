@@ -41,7 +41,7 @@ const loginUser = async (req, res, next) => {
         user: user.user,
         token: token,
         mail: user.mail,
-        //rol: user.rol,
+        rol: user.rol,
       },
     });
   } catch (error) {
