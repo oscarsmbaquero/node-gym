@@ -83,7 +83,6 @@ const addReserva = async (req, res, next) => {
   try {
     const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
     const { date, n_pista, nombre, idPista, multijugador } = req.body.reserva;
-    console.log(multijugador);
      const usuariosApuntados = multijugador ? multijugador : 1;
     // Buscar una reserva existente coincidente
     const existingReserva = await Reservas.findOne({
@@ -94,7 +93,7 @@ const addReserva = async (req, res, next) => {
     });
 
     if (existingReserva) {
-      (existingReserva);
+      //(existingReserva);
       // Si la reserva existe, incrementar usuarios_apuntados en 1
       existingReserva.usuarios_apuntados += 1;
       await existingReserva.save();
@@ -117,18 +116,20 @@ const addReserva = async (req, res, next) => {
     } else {
       ('no existe esta reserva');
       // Si no existe, crear una nueva reserva
+      let arrayDeNombres = Array(usuariosApuntados).fill(nombre);
       const newReserva = new Reservas({
         fecha: req.body.reserva.date,
         horaInicio: horaInicio,
         horaFin:horaFin,
         instalacion: req.body.reserva.pista,
-        usuario: req.body.reserva.nombre,
+        usuario: arrayDeNombres,
         n_usuario: 4,
         usuarios_apuntados: multijugador ? multijugador : 1,
         //usuarios_apuntados: req.body.reserva.jugadores_apuntados ? req.body.reserva.jugadores_apuntados : 1,
       });
+      //let arrayDeNombres = Array(usuariosApuntados).fill(nombre);
       await User.updateOne(
-        { _id: nombre },
+        { _id: arrayDeNombres },
         { $push: { reservas: newReserva._id } },
         { new: true }
       );
