@@ -82,7 +82,9 @@ const addReservaOld = async (req, res, next) => {
 const addReserva = async (req, res, next) => {
   try {
     const [horaInicio, horaFin] = req.body.reserva.hora.split('-');
-    const { date, n_pista, nombre, idPista } = req.body.reserva;
+    const { date, n_pista, nombre, idPista, multijugador } = req.body.reserva;
+    console.log(multijugador);
+     const usuariosApuntados = multijugador ? multijugador : 1;
     // Buscar una reserva existente coincidente
     const existingReserva = await Reservas.findOne({
       fecha: date,
@@ -122,7 +124,7 @@ const addReserva = async (req, res, next) => {
         instalacion: req.body.reserva.pista,
         usuario: req.body.reserva.nombre,
         n_usuario: 4,
-        usuarios_apuntados: 1,
+        usuarios_apuntados: multijugador ? multijugador : 1,
         //usuarios_apuntados: req.body.reserva.jugadores_apuntados ? req.body.reserva.jugadores_apuntados : 1,
       });
       await User.updateOne(
